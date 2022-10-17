@@ -17,6 +17,7 @@ interface Props {
 
 const MenuBox: FC<Props> = (props) => {
   const [shrink, setShrink] = useState(false);
+  const [bounce, setBounce] = useState(false);
 
   const [ref, api] = useBox(() => ({
     mass: 1,
@@ -43,6 +44,11 @@ const MenuBox: FC<Props> = (props) => {
             e.target.name = MENU_BOX_NAME;
           }, 3000);
         }, 1500);
+      } else if (!bounce && e.contact.impactVelocity > 3) {
+        setBounce(true);
+        setTimeout(() => {
+          setBounce(false);
+        }, 100);
       }
     },
     ...(props.boxProps || {}),
@@ -50,6 +56,10 @@ const MenuBox: FC<Props> = (props) => {
   useFrame(() => {
     if (shrink && ref.current) {
       ref.current.scale.lerp(new Vector3(0, 0, 0), 0.05);
+    } else if (bounce && ref.current) {
+      ref.current.scale.lerp(new Vector3(0.5, 0.5, 0.5), 0.05);
+    } else if (ref.current) {
+      ref.current.scale.lerp(new Vector3(1, 1, 1), 0.05);
     }
   });
 
