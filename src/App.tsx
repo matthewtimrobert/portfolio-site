@@ -5,16 +5,15 @@ import { useDispatch } from "react-redux";
 import CanvasContent from "./components/CanvasContent";
 import { setNavType } from "./redux/action";
 import { useAppSelector } from "./redux/configureStore";
-import { getNavType, showMenuTip } from "./redux/selector";
+import { getNavType } from "./redux/selector";
 import { NavType } from "./redux/state";
 const App: FC = () => {
   const dispatch = useDispatch();
-  const showResume = useAppSelector(getNavType) === NavType.RESUME;
-  const showTip = useAppSelector(showMenuTip);
+  const currentNav = useAppSelector(getNavType);
 
   return (
     <div className="main">
-      {showResume && (
+      {[NavType.RESUME, NavType.SORTING_VISUAL].includes(currentNav) && (
         <Button
           className="main-back-button anchor"
           variant="contained"
@@ -25,7 +24,7 @@ const App: FC = () => {
           Click to go back to menu
         </Button>
       )}
-      {!showResume && showTip && (
+      {currentNav === NavType.MENU && (
         <Typography className="main-menu-tip anchor">
           Click the cubes to navigate
         </Typography>

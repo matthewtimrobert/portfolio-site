@@ -6,6 +6,7 @@ export interface AppState {
 export enum NavType {
   RESUME = "RESUME",
   MENU = "MENU",
+  SORTING_VISUAL = "SORTING_VISUAL",
 }
 
 export const createDefaultState = (): AppState => ({

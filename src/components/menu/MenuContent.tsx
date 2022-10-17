@@ -87,7 +87,7 @@ const Menucontent: FC = () => {
             position={new Vector3(-4, 0.5, -1)}
             boxProps={{ rotation: [-Math.PI / 2, 0, 0] }}
             text={`Sorting Visualization`}
-            onClick={() => null}
+            onClick={() => dispatch(setNavType(NavType.SORTING_VISUAL))}
           />
           <MenuButton
             size={new Vector3(2, 2, 0.5)}
