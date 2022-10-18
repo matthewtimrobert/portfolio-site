@@ -6,3 +6,6 @@ export const enableOrbitControls = (state: RootState) =>
 export const getNavType = (state: RootState) => state.currentNav;
 
 export const getShowMenuTip = (state: RootState) => state.showMenuTip;
+
+export const getSortingAnimations = (state: RootState) =>
+  state.sortingAnimations;

@@ -31,7 +31,7 @@ const App: FC = () => {
         </Typography>
       )}
 
-      <Canvas shadows dpr={[1, 2]} camera={{ fov: 75 }}>
+      <Canvas shadows dpr={[1, 2]} camera={{ fov: 75, position: [0, 10, 10] }}>
         <CanvasContent />
       </Canvas>
     </div>
