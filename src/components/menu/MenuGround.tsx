@@ -1,5 +1,5 @@
 import { PlaneProps, usePlane } from "@react-three/cannon";
-import { MeshDistortMaterial, Plane } from "@react-three/drei";
+import { Plane } from "@react-three/drei";
 import { FC } from "react";
 
 interface Props {
