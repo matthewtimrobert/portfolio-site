@@ -6,7 +6,7 @@ import { removeFirstAnimation, setSortingAnimations } from "../../redux/action";
 import { useAppSelector } from "../../redux/configureStore";
 import { getNavType, getSortingAnimations } from "../../redux/selector";
 import { NavType, VisualArray } from "../../redux/state";
-import { sort } from "./algos/InsertionSort";
+import { selectionSort } from "./sortingAlgos";
 import SortingVisualBox from "./SortingVisualBox";
 
 const SortingVisulization: FC = () => {
@@ -15,7 +15,7 @@ const SortingVisulization: FC = () => {
   const bounds = useBounds();
   const startingArray: VisualArray = useMemo(
     () =>
-      Array(20)
+      Array(50)
         .fill(1)
         .map(() => ({
           value: Math.floor(Math.random() * 100 + 1),
@@ -27,15 +27,18 @@ const SortingVisulization: FC = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     if (showVisual) {
-      bounds.fit().refresh();
-      dispatch(setSortingAnimations([startingArray, ...sort(startingArray)]));
+      dispatch(
+        setSortingAnimations([
+          startingArray,
+          ...selectionSort([...startingArray]),
+        ])
+      );
     }
   }, [showVisual, startingArray, dispatch, bounds]);
 
   useEffect(() => {
     const timer = setTimeout(() => {
       if (showVisual) {
-        bounds.fit().refresh();
         dispatch(removeFirstAnimation());
       }
     }, 100);
