@@ -77,7 +77,7 @@ const ResumeContent: FC = () => {
             />
           ))}
           <ResumeTitle
-            titleText="Experience"
+            titleText="Projects"
             startingHeight={-10}
             backgroundColor={color}
           />

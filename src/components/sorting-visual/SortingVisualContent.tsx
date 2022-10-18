@@ -1,5 +1,6 @@
-import { Bounds, OrbitControls, Plane } from "@react-three/drei";
+import { Bounds, OrbitControls, Plane, Text } from "@react-three/drei";
 import { FC } from "react";
+import { BOLD_FONT } from "../../assets/constants";
 import { useAppSelector } from "../../redux/configureStore";
 import { getNavType } from "../../redux/selector";
 import { NavType } from "../../redux/state";
@@ -32,6 +33,19 @@ const SortingVisualContent: FC = () => {
       <Bounds fit clip observe damping={6} margin={1.2}>
         <SortingVisulization />
       </Bounds>
+
+      <Text
+        position={[11, 0.1, 5]}
+        rotation={[-Math.PI / 2, 0, 0]}
+        font={BOLD_FONT}
+        fontSize={2}
+        lineHeight={2}
+        textAlign="center"
+        anchorX="center"
+        anchorY="middle"
+      >
+        Insertion Sort
+      </Text>
     </group>
   ) : null;
 };

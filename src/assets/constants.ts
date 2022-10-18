@@ -50,6 +50,14 @@ export const education = [
 
 export const projects = [
   {
+    titleText: "This Website",
+    dateText: "Oct 2022",
+    bullets: [
+      "Makes use of React, TypeScript, Redux, SCSS, and ThreeJS",
+      "Source code is located on my github",
+    ],
+  },
+  {
     titleText: "Roblox, Game Developer, Owner and Lead Programmer",
     dateText: "Summer 2021",
     bullets: [
