@@ -1,5 +1,5 @@
 import { PlaneProps, usePlane } from "@react-three/cannon";
-import { Plane } from "@react-three/drei";
+import { MeshDistortMaterial, Plane } from "@react-three/drei";
 import { FC } from "react";
 
 interface Props {
@@ -13,8 +13,9 @@ const MenuGround: FC<Props> = (props) => {
   }));
 
   return (
-    <Plane args={[500, 500]} ref={ref} receiveShadow>
-      <meshPhongMaterial color="lightblue" />
+    <Plane args={[200, 200]} ref={ref} receiveShadow castShadow>
+      {/* <meshStandardMaterial color="lightblue" /> */}
+      <shadowMaterial opacity={0.5} />
     </Plane>
   );
 };

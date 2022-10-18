@@ -15,6 +15,7 @@ const ResumeContent: FC = () => {
   const showResume = useAppSelector(getNavType) === NavType.RESUME;
   const { camera } = useThree();
 
+  // init camera when nav change
   useEffect(() => {
     if (showResume) {
       camera.position.x = 0;
@@ -24,16 +25,21 @@ const ResumeContent: FC = () => {
     }
   }, [showResume, camera]);
 
-  return showResume ? (
-    <group position={[0, 0, 0]}>
-      <mesh receiveShadow position={[0, -2, -0.5]}>
+  // we keep the component mounted but very far away so we don't have to rerender the meshes
+  return (
+    <group position={showResume ? [0, 0, 0] : [100, 1000, 100]}>
+      <mesh receiveShadow>
         <planeGeometry args={[50, 50]} />
         <meshPhongMaterial color="lightblue" />
       </mesh>
-      <fog attach="fog" args={["#202020", 5, 20]} />
+      {showResume ? (
+        <>
+          <directionalLight position={[5, 0, 5]} castShadow intensity={0.2} />
+          <SpotlightTrack position={new Vector3(4, 3, 3)} />
+          <SpotlightTrack position={new Vector3(-4, 3, 3)} />{" "}
+        </>
+      ) : null}
 
-      <SpotlightTrack position={new Vector3(4, 3, 3)} />
-      <SpotlightTrack position={new Vector3(-4, 3, 3)} />
       <ScrollControls
         pages={2}
         distance={1}
@@ -87,7 +93,7 @@ const ResumeContent: FC = () => {
         </Scroll>
       </ScrollControls>
     </group>
-  ) : null;
+  );
 };
 
 export default ResumeContent;

@@ -6,8 +6,6 @@ const CanvasContent: FC = () => {
   return (
     <>
       <color attach="background" args={["lightblue"]} />
-      <ambientLight intensity={0.1} />
-
       <Menucontent />
       <ResumeContent />
     </>

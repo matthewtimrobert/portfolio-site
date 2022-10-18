@@ -5,11 +5,12 @@ import { useDispatch } from "react-redux";
 import CanvasContent from "./components/CanvasContent";
 import { setNavType } from "./redux/action";
 import { useAppSelector } from "./redux/configureStore";
-import { getNavType } from "./redux/selector";
+import { getNavType, getShowMenuTip } from "./redux/selector";
 import { NavType } from "./redux/state";
 const App: FC = () => {
   const dispatch = useDispatch();
   const currentNav = useAppSelector(getNavType);
+  const showMenuTip = useAppSelector(getShowMenuTip);
 
   return (
     <div className="main">
@@ -24,7 +25,7 @@ const App: FC = () => {
           Click to go back to menu
         </Button>
       )}
-      {currentNav === NavType.MENU && (
+      {currentNav === NavType.MENU && showMenuTip && (
         <Typography className="main-menu-tip anchor">
           Click the cubes to navigate
         </Typography>

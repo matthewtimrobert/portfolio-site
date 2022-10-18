@@ -37,9 +37,11 @@ const Menubutton: FC<Props> = (props) => {
 
       const vec = ref.current.position.lerp(targetVector, 0.1);
       api.position.set(vec.x, vec.y, vec.z);
+      ref.current.scale.lerp(new Vector3(1, 1, 0.75), 0.1);
     } else if (ref.current) {
       const vec = ref.current.position.lerp(props.position, 0.1);
       api.position.set(vec.x, vec.y, vec.z);
+      ref.current.scale.lerp(new Vector3(1, 1, 1), 0.1);
     }
   });
 
