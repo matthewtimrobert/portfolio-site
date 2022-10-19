@@ -59,7 +59,7 @@ const SortingVisulization: FC = () => {
       if (showVisual) {
         dispatch(removeFirstAnimation());
       }
-    }, sortingSpeed || 50);
+    }, 100 * (10 / sortingSpeed) || 50);
     return () => {
       clearTimeout(timer);
     };
@@ -99,7 +99,7 @@ const SortingVisulization: FC = () => {
       })} */}
       {sortingAnimations[0]?.map((value, i) => (
         <SortingVisualBox
-          key={value.id}
+          key={value.value}
           position={new Vector3(i * 1.2, 0, 0)}
           size={new Vector3(1, value.value / 5, 1)}
           {...{ ...value }}

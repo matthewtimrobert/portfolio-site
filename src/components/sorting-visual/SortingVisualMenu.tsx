@@ -81,14 +81,14 @@ const SortingVisualMenu: FC = () => {
               ))}
             </Select>
             <TextField
-              label="Speed (ms)"
+              label="Speed (%)"
               fullWidth
               type="number"
               value={sortingSpeed || ""}
               onChange={(e) => {
                 const val = parseInt(e.target.value);
-                if (val > 500) {
-                  dispatch(setSortingSpeed(500));
+                if (val > 100) {
+                  dispatch(setSortingSpeed(100));
                 } else if (val < 0) {
                   dispatch(setSortingSpeed(1));
                 } else {
@@ -102,11 +102,11 @@ const SortingVisualMenu: FC = () => {
             <Slider
               value={sortingSpeed}
               size="small"
-              max={500}
+              max={100}
               min={1}
               onChange={(_e, val) => {
-                if (val > 500) {
-                  dispatch(setSortingSpeed(500));
+                if (val > 100) {
+                  dispatch(setSortingSpeed(100));
                 } else if (val < 0) {
                   dispatch(setSortingSpeed(1));
                 } else {
@@ -121,8 +121,8 @@ const SortingVisualMenu: FC = () => {
               value={localSortAmount || ""}
               onChange={(e) => {
                 const val = parseInt(e.target.value);
-                if (val > 500) {
-                  setLocalSortAmount(500);
+                if (val > 100) {
+                  setLocalSortAmount(100);
                 } else if (val < 0) {
                   setLocalSortAmount(1);
                 } else {
@@ -136,11 +136,11 @@ const SortingVisualMenu: FC = () => {
             <Slider
               value={localSortAmount}
               size="small"
-              max={500}
+              max={100}
               min={1}
               onChange={(_e, val) => {
-                if (val > 500) {
-                  setLocalSortAmount(500);
+                if (val > 100) {
+                  setLocalSortAmount(100);
                 } else if (val < 0) {
                   setLocalSortAmount(1);
                 } else {
