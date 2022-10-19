@@ -118,10 +118,10 @@ const gnomeSort = (arr: VisualArray, steps: VisualArray[]) => {
 const wrapSort = (
   sortingFunc: (arr: VisualArray, steps: VisualArray[]) => void
 ) => {
-  const steps: VisualArray[] = [];
   return (arr: VisualArray) => {
-    sortingFunc(arr, steps);
-    return steps;
+    const steps: VisualArray[] = [];
+    sortingFunc([...arr], steps);
+    return [...steps];
   };
 };
 

@@ -6,11 +6,13 @@ import {
   Paper,
   Popper,
   Select,
+  Slider,
   TextField,
   Typography,
 } from "@mui/material";
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
+import { useDebounce } from "../../assets/utils";
 import {
   setRefreshAlgo,
   setSortAmount,
@@ -33,7 +35,15 @@ const SortingVisualMenu: FC = () => {
   const refreshAlgo = useAppSelector(getRefreshAlgo);
   const sortAmount = useAppSelector(getSortAmount);
 
+  const [localSortAmount, setLocalSortAmount] = useState(sortAmount);
+  const debouncedLocalSortAmount = useDebounce(localSortAmount, 500);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (debouncedLocalSortAmount === localSortAmount)
+      dispatch(setSortAmount(localSortAmount));
+  }, [debouncedLocalSortAmount, localSortAmount, dispatch]);
+
   return (
     <div className="main-visualizer-menu anchor">
       <Button
@@ -77,8 +87,8 @@ const SortingVisualMenu: FC = () => {
               value={sortingSpeed || ""}
               onChange={(e) => {
                 const val = parseInt(e.target.value);
-                if (val > 5000) {
-                  dispatch(setSortingSpeed(5000));
+                if (val > 500) {
+                  dispatch(setSortingSpeed(500));
                 } else if (val < 0) {
                   dispatch(setSortingSpeed(1));
                 } else {
@@ -86,33 +96,63 @@ const SortingVisualMenu: FC = () => {
                 }
               }}
               style={{
-                marginBottom: "10px",
+                marginTop: "10px",
+              }}
+            />
+            <Slider
+              value={sortingSpeed}
+              size="small"
+              max={500}
+              min={1}
+              onChange={(_e, val) => {
+                if (val > 500) {
+                  dispatch(setSortingSpeed(500));
+                } else if (val < 0) {
+                  dispatch(setSortingSpeed(1));
+                } else {
+                  dispatch(setSortingSpeed(val as number));
+                }
               }}
             />
             <TextField
               label="Amount to sort"
               fullWidth
               type="number"
-              value={sortAmount || ""}
+              value={localSortAmount || ""}
               onChange={(e) => {
                 const val = parseInt(e.target.value);
                 if (val > 500) {
-                  dispatch(setSortAmount(500));
+                  setLocalSortAmount(500);
                 } else if (val < 0) {
-                  dispatch(setSortAmount(1));
+                  setLocalSortAmount(1);
                 } else {
-                  dispatch(setSortAmount(val));
+                  setLocalSortAmount(val);
                 }
               }}
               style={{
-                marginBottom: "10px",
+                marginTop: "10px",
+              }}
+            />
+            <Slider
+              value={localSortAmount}
+              size="small"
+              max={500}
+              min={1}
+              onChange={(_e, val) => {
+                if (val > 500) {
+                  setLocalSortAmount(500);
+                } else if (val < 0) {
+                  setLocalSortAmount(1);
+                } else {
+                  setLocalSortAmount(val as number);
+                }
               }}
             />
             <Button
               fullWidth
               variant="contained"
               style={{
-                marginBottom: "10px",
+                marginTop: "10px",
               }}
               onClick={() => dispatch(setRefreshAlgo(!refreshAlgo))}
             >

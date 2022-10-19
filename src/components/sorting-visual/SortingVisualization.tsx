@@ -47,6 +47,7 @@ const SortingVisulization: FC = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     if (showVisual) {
+      console.log("refresh");
       dispatch(
         setSortingAnimations([startingArray, ...algoFunc([...startingArray])])
       );
@@ -66,6 +67,36 @@ const SortingVisulization: FC = () => {
 
   return (
     <>
+      {/* {sortingAnimations[0]?.map((value, i) => {
+        const angle = ((Math.PI * 2) / sortingAnimations[0].length) * i;
+        const R = sortingAnimations[0].length / 2;
+        return (
+          <SortingVisualBox
+            key={value.id}
+            position={new Vector3(R * Math.cos(angle), 0, R * Math.sin(angle))}
+            size={new Vector3(1, value.value / 5, 1)}
+            {...{ ...value }}
+          />
+        );
+      })} */}
+
+      {/* {sortingAnimations[0]?.map((value, i) => {
+        const goldenRatio = 1 + Math.sqrt(5);
+        const angleIncrement = Math.PI * 2 * goldenRatio;
+        const multiplier = 10;
+        const distance = i / sortingAnimations[0].length;
+        const angle = angleIncrement * i;
+        const x = distance * Math.cos(angle) * multiplier;
+        const y = distance * Math.sin(angle) * multiplier;
+        return (
+          <SortingVisualBox
+            key={value.id}
+            position={new Vector3(x, 0, y)}
+            size={new Vector3(1, value.value / 5, 1)}
+            {...{ ...value }}
+          />
+        );
+      })} */}
       {sortingAnimations[0]?.map((value, i) => (
         <SortingVisualBox
           key={value.id}
