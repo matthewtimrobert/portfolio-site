@@ -74,6 +74,13 @@ const reducer: Reducer<AppState, Action> = (
       };
     }
 
+    case ActionTypes.SET_SORTING_VISUAL_TYPE: {
+      return {
+        ...state,
+        sortingVisualType: action.payload,
+      };
+    }
+
     default: {
       return { ...state };
     }

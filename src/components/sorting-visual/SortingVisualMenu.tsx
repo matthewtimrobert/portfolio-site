@@ -1,11 +1,9 @@
 import {
   Button,
   FormControl,
-  InputLabel,
   MenuItem,
   Paper,
   Popper,
-  Select,
   Slider,
   TextField,
   Typography,
@@ -18,6 +16,7 @@ import {
   setSortAmount,
   setSortingAlgo,
   setSortingSpeed,
+  setSortingVisualType,
 } from "../../redux/action";
 import { useAppSelector } from "../../redux/configureStore";
 import {
@@ -25,15 +24,25 @@ import {
   getSortAmount,
   getSortingAlgo,
   getSortingSpeed,
+  getSortingVisualType,
 } from "../../redux/selector";
 import "./sorting-algo.scss";
-import { getLabel, getMap, SortingAlgos } from "./sortingAlgosHelpers";
+import {
+  getAlgoLabel,
+  getAlgoMap,
+  getVisualLabel,
+  getVisualMap,
+  SortingAlgos,
+  SortingVisualType,
+} from "./sortingAlgosHelpers";
+
 const SortingVisualMenu: FC = () => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const sortingAlgo = useAppSelector(getSortingAlgo);
   const sortingSpeed = useAppSelector(getSortingSpeed);
   const refreshAlgo = useAppSelector(getRefreshAlgo);
   const sortAmount = useAppSelector(getSortAmount);
+  const sortingVisualType = useAppSelector(getSortingVisualType);
 
   const [localSortAmount, setLocalSortAmount] = useState(sortAmount);
   const debouncedLocalSortAmount = useDebounce(localSortAmount, 500);
@@ -45,9 +54,10 @@ const SortingVisualMenu: FC = () => {
   }, [debouncedLocalSortAmount, localSortAmount, dispatch]);
 
   return (
-    <div className="main-visualizer-menu anchor">
+    <div className="anchor">
       <Button
         variant="contained"
+        className="sort-visual-button"
         aria-controls={!!anchorEl ? "basic-menu" : undefined}
         aria-haspopup="true"
         aria-expanded={!!anchorEl ? "true" : undefined}
@@ -59,14 +69,13 @@ const SortingVisualMenu: FC = () => {
       </Button>
       <Popper open={!!anchorEl} anchorEl={anchorEl}>
         <Paper style={{ padding: "5px" }}>
-          <Typography sx={{ p: 2 }}>Configure Sorting Settings</Typography>
-
-          <FormControl fullWidth>
-            <InputLabel>Algorithim</InputLabel>
-            <Select
+          <FormControl>
+            <Typography sx={{ p: 2 }}>Configure Sorting Settings</Typography>
+            <TextField
               value={sortingAlgo}
               label="Algorithim"
               fullWidth
+              select
               onChange={(e) =>
                 dispatch(setSortingAlgo(e.target.value as SortingAlgos))
               }
@@ -74,12 +83,32 @@ const SortingVisualMenu: FC = () => {
                 marginBottom: "10px",
               }}
             >
-              {getMap().map((sortingAlgo) => (
+              {getAlgoMap().map((sortingAlgo) => (
                 <MenuItem key={sortingAlgo} value={sortingAlgo}>
-                  {getLabel(sortingAlgo)}
+                  {getAlgoLabel(sortingAlgo)}
                 </MenuItem>
               ))}
-            </Select>
+            </TextField>
+            <TextField
+              value={sortingVisualType}
+              label="Sorting Visual Type"
+              fullWidth
+              select
+              onChange={(e) =>
+                dispatch(
+                  setSortingVisualType(e.target.value as SortingVisualType)
+                )
+              }
+              style={{
+                marginBottom: "10px",
+              }}
+            >
+              {getVisualMap().map((sortingVisual) => (
+                <MenuItem key={sortingVisual} value={sortingVisual}>
+                  {getVisualLabel(sortingVisual)}
+                </MenuItem>
+              ))}
+            </TextField>
             <TextField
               label="Speed (%)"
               fullWidth

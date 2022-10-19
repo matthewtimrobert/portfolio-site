@@ -1,4 +1,7 @@
-import { SortingAlgos } from "../components/sorting-visual/sortingAlgosHelpers";
+import {
+  SortingAlgos,
+  SortingVisualType,
+} from "../components/sorting-visual/sortingAlgosHelpers";
 import { NavType, VisualArray } from "./state";
 
 export enum ActionTypes {
@@ -11,6 +14,7 @@ export enum ActionTypes {
   SET_SORTING_SPEED = "SET_SORTING_SPEED",
   SET_REFRESH_ALGO = "SET_REFRESH_ALGO",
   SET_SORT_AMOUNT = "SET_SORT_AMOUNT",
+  SET_SORTING_VISUAL_TYPE = "SET_SORTING_VISUAL_TYPE",
 }
 
 export type Action =
@@ -22,6 +26,7 @@ export type Action =
   | ReturnType<typeof setSortingSpeed>
   | ReturnType<typeof setRefreshAlgo>
   | ReturnType<typeof setSortAmount>
+  | ReturnType<typeof setSortingVisualType>
   | ReturnType<typeof removeFirstAnimation>;
 
 export const setNavType = (currentNav: NavType) =>
@@ -75,4 +80,9 @@ export const setSortAmount = (sortAmount: number) =>
   ({
     type: ActionTypes.SET_SORT_AMOUNT,
     payload: sortAmount,
+  } as const);
+export const setSortingVisualType = (sortingVisualType: SortingVisualType) =>
+  ({
+    type: ActionTypes.SET_SORTING_VISUAL_TYPE,
+    payload: sortingVisualType,
   } as const);

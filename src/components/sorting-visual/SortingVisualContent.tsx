@@ -4,7 +4,7 @@ import { BOLD_FONT } from "../../assets/constants";
 import { useAppSelector } from "../../redux/configureStore";
 import { getNavType, getSortingAlgo } from "../../redux/selector";
 import { NavType } from "../../redux/state";
-import { getLabel } from "./sortingAlgosHelpers";
+import { getAlgoLabel } from "./sortingAlgosHelpers";
 import SortingVisulization from "./SortingVisualization";
 
 const SortingVisualContent: FC = () => {
@@ -13,7 +13,7 @@ const SortingVisualContent: FC = () => {
 
   return showVisual ? (
     <group>
-      <OrbitControls makeDefault />
+      <OrbitControls makeDefault enablePan={false} />
       <ambientLight intensity={0.5} />
       <directionalLight
         position={[5, 10, 5]}
@@ -32,12 +32,12 @@ const SortingVisualContent: FC = () => {
       >
         <shadowMaterial opacity={0.5} />
       </Plane>
-      <Bounds fit clip observe damping={6} margin={1.2}>
+      <Bounds fit clip observe margin={1}>
         <SortingVisulization />
       </Bounds>
 
       <Text
-        position={[11, 0.1, 5]}
+        position={[0, 0.1, 5]}
         rotation={[-Math.PI / 2, 0, 0]}
         font={BOLD_FONT}
         fontSize={2}
@@ -46,7 +46,7 @@ const SortingVisualContent: FC = () => {
         anchorX="center"
         anchorY="middle"
       >
-        {getLabel(sortingAlgo)}
+        {getAlgoLabel(sortingAlgo)}
       </Text>
     </group>
   ) : null;

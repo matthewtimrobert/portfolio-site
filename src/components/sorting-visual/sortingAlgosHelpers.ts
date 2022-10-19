@@ -139,7 +139,7 @@ export enum SortingAlgos {
   GNMORE_SORT = "GNMORE_SORT",
 }
 
-export const getLabel = (sortingAlgo: SortingAlgos) =>
+export const getAlgoLabel = (sortingAlgo: SortingAlgos) =>
   ({
     [SortingAlgos.SELECTION_SORT]: "Selection Sort",
     [SortingAlgos.BUBBLE_SORT]: "Bubble Sort",
@@ -157,10 +157,35 @@ export const getAlgo = (sortingAlgo: SortingAlgos) =>
     [SortingAlgos.GNMORE_SORT]: wrapSort(gnomeSort),
   }[sortingAlgo]);
 
-export const getMap = () => [
+export const getAlgoMap = () => [
   SortingAlgos.COCKTAIL_SORT,
   SortingAlgos.SELECTION_SORT,
   SortingAlgos.BUBBLE_SORT,
   SortingAlgos.INSERTION_SORT,
   SortingAlgos.GNMORE_SORT,
+];
+
+export enum SortingVisualType {
+  VISUAL_LINE = "VISUAL_LINE",
+  VISUAL_CIRCLE = "VISUAL_CIRCLE",
+  VISUAL_SPIRAL = "VISUAL_SPIRAL",
+  VISUAL_STAR = "VISUAL_STAR",
+  VISUAL_CROSS = "VISUAL_CROSS",
+}
+
+export const getVisualLabel = (sortingVisualType: SortingVisualType) =>
+  ({
+    [SortingVisualType.VISUAL_LINE]: "Line",
+    [SortingVisualType.VISUAL_CIRCLE]: "Circle",
+    [SortingVisualType.VISUAL_SPIRAL]: "Spiral",
+    [SortingVisualType.VISUAL_STAR]: "Star",
+    [SortingVisualType.VISUAL_CROSS]: "Cross",
+  }[sortingVisualType]);
+
+export const getVisualMap = () => [
+  SortingVisualType.VISUAL_LINE,
+  SortingVisualType.VISUAL_CIRCLE,
+  SortingVisualType.VISUAL_SPIRAL,
+  SortingVisualType.VISUAL_STAR,
+  SortingVisualType.VISUAL_CROSS,
 ];

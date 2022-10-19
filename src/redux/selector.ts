@@ -17,3 +17,6 @@ export const getSortingSpeed = (state: RootState) => state.sortingSpeed;
 export const getRefreshAlgo = (state: RootState) => state.refreshAlgo;
 
 export const getSortAmount = (state: RootState) => state.sortAmount;
+
+export const getSortingVisualType = (state: RootState) =>
+  state.sortingVisualType;

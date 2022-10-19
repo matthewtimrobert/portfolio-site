@@ -1,4 +1,7 @@
-import { SortingAlgos } from "../components/sorting-visual/sortingAlgosHelpers";
+import {
+  SortingAlgos,
+  SortingVisualType,
+} from "../components/sorting-visual/sortingAlgosHelpers";
 
 export enum NavType {
   RESUME = "RESUME",
@@ -21,6 +24,7 @@ export interface AppState {
   sortingSpeed: number;
   refreshAlgo: boolean;
   sortAmount: number;
+  sortingVisualType: SortingVisualType;
 }
 
 export const createDefaultState = (): AppState => ({
@@ -28,6 +32,7 @@ export const createDefaultState = (): AppState => ({
   showMenuTip: true,
   sortingAnimations: [],
   sortingAlgo: SortingAlgos.INSERTION_SORT,
+  sortingVisualType: SortingVisualType.VISUAL_LINE,
   sortingSpeed: 50,
   refreshAlgo: false,
   sortAmount: 50,

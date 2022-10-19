@@ -44,7 +44,7 @@ const Menucontent: FC = () => {
             shadow-camera-top={10}
             shadow-camera-bottom={-10}
           />
-          <OrbitControls makeDefault />
+          <OrbitControls makeDefault enablePan={false} />
         </>
       ) : null}
 
