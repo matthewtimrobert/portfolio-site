@@ -28,7 +28,7 @@ export const createDefaultState = (): AppState => ({
   showMenuTip: true,
   sortingAnimations: [],
   sortingAlgo: SortingAlgos.INSERTION_SORT,
-  sortingSpeed: 100,
+  sortingSpeed: 50,
   refreshAlgo: false,
   sortAmount: 50,
 });
