@@ -121,6 +121,12 @@ const wrapSort = (
   return (arr: VisualArray) => {
     const steps: VisualArray[] = [];
     sortingFunc([...arr], steps);
+    // remove bools on last step
+    steps[steps.length - 1] = steps[steps.length - 1]?.map((v) => ({
+      ...v,
+      selected: false,
+      checking: false,
+    }));
     return [...steps];
   };
 };
