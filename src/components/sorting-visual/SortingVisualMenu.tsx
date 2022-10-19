@@ -74,7 +74,7 @@ const SortingVisualMenu: FC = () => {
               label="Speed (ms)"
               fullWidth
               type="number"
-              value={sortingSpeed}
+              value={sortingSpeed || ""}
               onChange={(e) => {
                 const val = parseInt(e.target.value);
                 if (val > 5000) {
@@ -93,7 +93,7 @@ const SortingVisualMenu: FC = () => {
               label="Amount to sort"
               fullWidth
               type="number"
-              value={sortAmount}
+              value={sortAmount || ""}
               onChange={(e) => {
                 const val = parseInt(e.target.value);
                 if (val > 500) {

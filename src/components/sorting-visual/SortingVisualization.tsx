@@ -29,13 +29,17 @@ const SortingVisulization: FC = () => {
     () =>
       Array(sortAmount || 1)
         .fill(1)
-        .map(() => ({
-          value: Math.floor(Math.random() * 100 + 1),
+        .map((_, i) => ({
+          value: i,
           color: "FFFFFF",
           selected: false,
           checking: false,
           id: Math.random(), // should use UID
-        })),
+        }))
+        // shuffle
+        .map((value) => ({ value, sort: Math.random() }))
+        .sort((a, b) => a.sort - b.sort)
+        .map(({ value }) => value),
     [sortAmount]
   );
 
