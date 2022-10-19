@@ -3,13 +3,14 @@ import { TypedUseSelectorHook, useSelector } from "react-redux";
 import logger from "redux-logger";
 import reducer from "./reducer";
 
-const devEnv = !process.env.NODE_ENV || process.env.NODE_ENV === "development";
+const devEnv =
+  !process.env.NODE_ENV || (process.env.NODE_ENV === "development" && false);
 
 export const ConfigureStore = () =>
   configureStore({
     reducer,
     middleware: (getDefaultMiddleware) =>
-      devEnv ? getDefaultMiddleware().concat(logger) : getDefaultMiddleware(),
+      devEnv ? getDefaultMiddleware().concat(logger) : [],
   });
 
 export type RootState = ReturnType<typeof reducer>;

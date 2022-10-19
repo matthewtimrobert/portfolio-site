@@ -46,6 +46,34 @@ const reducer: Reducer<AppState, Action> = (
       };
     }
 
+    case ActionTypes.SET_SORTING_ALGO: {
+      return {
+        ...state,
+        sortingAlgo: action.payload,
+      };
+    }
+
+    case ActionTypes.SET_SORTING_SPEED: {
+      return {
+        ...state,
+        sortingSpeed: action.payload,
+      };
+    }
+
+    case ActionTypes.SET_REFRESH_ALGO: {
+      return {
+        ...state,
+        refreshAlgo: action.payload,
+      };
+    }
+
+    case ActionTypes.SET_SORT_AMOUNT: {
+      return {
+        ...state,
+        sortAmount: action.payload,
+      };
+    }
+
     default: {
       return { ...state };
     }

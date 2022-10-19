@@ -3,6 +3,7 @@ import { Canvas } from "@react-three/fiber";
 import { FC } from "react";
 import { useDispatch } from "react-redux";
 import CanvasContent from "./components/CanvasContent";
+import SortingVisualMenu from "./components/sorting-visual/SortingVisualMenu";
 import { setNavType } from "./redux/action";
 import { useAppSelector } from "./redux/configureStore";
 import { getNavType, getShowMenuTip } from "./redux/selector";
@@ -30,6 +31,7 @@ const App: FC = () => {
           Click the cubes to navigate
         </Typography>
       )}
+      {currentNav === NavType.SORTING_VISUAL && <SortingVisualMenu />}
 
       <Canvas shadows dpr={[1, 2]} camera={{ fov: 75, position: [0, 10, 10] }}>
         <CanvasContent />

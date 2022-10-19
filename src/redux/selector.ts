@@ -9,3 +9,11 @@ export const getShowMenuTip = (state: RootState) => state.showMenuTip;
 
 export const getSortingAnimations = (state: RootState) =>
   state.sortingAnimations;
+
+export const getSortingAlgo = (state: RootState) => state.sortingAlgo;
+
+export const getSortingSpeed = (state: RootState) => state.sortingSpeed;
+
+export const getRefreshAlgo = (state: RootState) => state.refreshAlgo;
+
+export const getSortAmount = (state: RootState) => state.sortAmount;

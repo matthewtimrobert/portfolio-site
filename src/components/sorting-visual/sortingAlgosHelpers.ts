@@ -49,3 +49,29 @@ export const selectionSort = (arr: VisualArray) => {
   }
   return steps;
 };
+
+export enum SortingAlgos {
+  SELECTION_SORT = "SELECTION_SORT",
+  BUBBLE_SORT = "BUBBLE_SORT",
+  INSERTION_SORT = "INSERTION_SORT",
+}
+
+export const getLabel = (sortingAlgo: SortingAlgos) =>
+  ({
+    [SortingAlgos.SELECTION_SORT]: "Selection Sort",
+    [SortingAlgos.BUBBLE_SORT]: "Bubble Sort",
+    [SortingAlgos.INSERTION_SORT]: "Insertion Sort",
+  }[sortingAlgo]);
+
+export const getAlgo = (sortingAlgo: SortingAlgos) =>
+  ({
+    [SortingAlgos.SELECTION_SORT]: selectionSort,
+    [SortingAlgos.BUBBLE_SORT]: bubbleSort,
+    [SortingAlgos.INSERTION_SORT]: insertionSort,
+  }[sortingAlgo]);
+
+export const getMap = () => [
+  SortingAlgos.SELECTION_SORT,
+  SortingAlgos.BUBBLE_SORT,
+  SortingAlgos.INSERTION_SORT,
+];

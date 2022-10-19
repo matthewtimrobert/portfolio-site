@@ -2,12 +2,14 @@ import { Bounds, OrbitControls, Plane, Text } from "@react-three/drei";
 import { FC } from "react";
 import { BOLD_FONT } from "../../assets/constants";
 import { useAppSelector } from "../../redux/configureStore";
-import { getNavType } from "../../redux/selector";
+import { getNavType, getSortingAlgo } from "../../redux/selector";
 import { NavType } from "../../redux/state";
+import { getLabel } from "./sortingAlgosHelpers";
 import SortingVisulization from "./SortingVisualization";
 
 const SortingVisualContent: FC = () => {
   const showVisual = useAppSelector(getNavType) === NavType.SORTING_VISUAL;
+  const sortingAlgo = useAppSelector(getSortingAlgo);
 
   return showVisual ? (
     <group>
@@ -44,7 +46,7 @@ const SortingVisualContent: FC = () => {
         anchorX="center"
         anchorY="middle"
       >
-        Insertion Sort
+        {getLabel(sortingAlgo)}
       </Text>
     </group>
   ) : null;
