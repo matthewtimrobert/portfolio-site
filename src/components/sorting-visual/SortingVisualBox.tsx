@@ -17,14 +17,15 @@ const SortingVisualBox: FC<Props> = (props) => {
   const ref = useRef<THREE.Mesh>(null);
 
   useFrame(() => {
-    ref.current?.position.lerp(
-      new Vector3(
-        props.position.x,
-        props.position.y + props.size.y / 2,
-        props.position.z
-      ),
-      0.1
-    );
+    if (ref.current?.position !== props.position)
+      ref.current?.position.lerp(
+        new Vector3(
+          props.position.x,
+          props.position.y + props.size.y / 2,
+          props.position.z
+        ),
+        0.1
+      );
   });
   return (
     <RoundedBox
