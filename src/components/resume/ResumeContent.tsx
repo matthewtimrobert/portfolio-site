@@ -36,7 +36,7 @@ const ResumeContent: FC = () => {
         <>
           <directionalLight position={[5, 0, 5]} castShadow intensity={0.2} />
           <SpotlightTrack position={new Vector3(4, 3, 3)} />
-          <SpotlightTrack position={new Vector3(-4, 3, 3)} />{" "}
+          <SpotlightTrack position={new Vector3(-4, 3, 3)} />
         </>
       ) : null}
 
