@@ -31,7 +31,9 @@ const SortingVisulization: FC = () => {
         .fill(1)
         .map(() => ({
           value: Math.floor(Math.random() * 100 + 1),
-          color: Math.floor(Math.random() * 16777215).toString(16),
+          color: "FFFFFF",
+          selected: false,
+          id: Math.random(), // should use UID
         })),
     [sortAmount]
   );
@@ -61,11 +63,12 @@ const SortingVisulization: FC = () => {
     <>
       {sortingAnimations[0]?.map((value, i) => (
         <SortingVisualBox
-          key={value.color}
+          key={value.id}
           position={new Vector3(i * 1.2, 0, 0)}
           size={new Vector3(1, value.value / 5, 1)}
           color={value.color}
           value={value.value}
+          selected={value.selected}
         />
       ))}
     </>

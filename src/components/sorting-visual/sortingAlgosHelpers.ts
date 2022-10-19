@@ -1,19 +1,43 @@
 import { VisualArray } from "../../redux/state";
 
-export function swap(arr: VisualArray, index1: number, index2: number) {
+export const swap = (
+  arr: VisualArray,
+  index1: number,
+  index2: number,
+  steps: VisualArray[]
+) => {
   const temp = arr[index1];
   arr[index1] = arr[index2];
   arr[index2] = temp;
-}
+  steps.push([...arr]);
+};
+
+export const getValue = (
+  index: number,
+  arr: VisualArray,
+  steps: VisualArray[]
+) => {
+  const obj = arr[index];
+  if (obj) {
+    const newArr = [...arr].map((value, i) =>
+      i === index
+        ? {
+            ...value,
+            selected: true,
+          }
+        : value
+    );
+    steps.push(newArr);
+  }
+  return obj?.value;
+};
 
 export const insertionSort = (arr: VisualArray) => {
-  const steps = [];
-
+  const steps: VisualArray[] = [];
   for (let i = 1; i < arr.length; i++) {
     let j = i;
-    while (j > 0 && arr[j].value < arr[j - 1].value) {
-      swap(arr, j - 1, j);
-      steps.push([...arr]);
+    while (j > 0 && getValue(j, arr, steps) < getValue(j - 1, arr, steps)) {
+      swap(arr, j - 1, j, steps);
       j--;
     }
   }
@@ -21,12 +45,11 @@ export const insertionSort = (arr: VisualArray) => {
 };
 
 export const bubbleSort = (arr: VisualArray) => {
-  const steps = [];
+  const steps: VisualArray[] = [];
   for (let i = 0; i < arr.length; i++) {
     for (let j = 0; j < arr.length; j++) {
-      if (arr[j]?.value > arr[j + 1]?.value) {
-        swap(arr, j, j + 1);
-        steps.push([...arr]);
+      if (getValue(j, arr, steps) > getValue(j + 1, arr, steps)) {
+        swap(arr, j, j + 1, steps);
       }
     }
   }
@@ -34,17 +57,16 @@ export const bubbleSort = (arr: VisualArray) => {
 };
 
 export const selectionSort = (arr: VisualArray) => {
-  const steps = [];
+  const steps: VisualArray[] = [];
   for (let i = 0; i < arr.length - 1; i++) {
     let minIndex = i;
     for (let j = i + 1; j < arr.length; j++) {
-      if (arr[j].value < arr[minIndex].value) {
+      if (getValue(j, arr, steps) < getValue(minIndex, arr, steps)) {
         minIndex = j;
       }
     }
     if (i !== minIndex) {
-      swap(arr, i, minIndex);
-      steps.push([...arr]);
+      swap(arr, i, minIndex, steps);
     }
   }
   return steps;

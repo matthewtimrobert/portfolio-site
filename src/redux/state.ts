@@ -5,7 +5,12 @@ export enum NavType {
   MENU = "MENU",
   SORTING_VISUAL = "SORTING_VISUAL",
 }
-export type VisualArray = { value: number; color: string }[];
+export type VisualArray = {
+  value: number;
+  color: string;
+  selected: boolean;
+  id?: number;
+}[];
 
 export interface AppState {
   currentNav: NavType;

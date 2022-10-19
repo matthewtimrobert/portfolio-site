@@ -9,10 +9,10 @@ interface Props {
   position: Vector3;
   color: string;
   value: number;
+  selected: boolean;
 }
 
 const SortingVisualBox: FC<Props> = (props) => {
-  // const [hovering, setHovering] = useState(false);
   const ref = useRef<THREE.Mesh>(null);
 
   useFrame(() => {
@@ -35,10 +35,15 @@ const SortingVisualBox: FC<Props> = (props) => {
       castShadow
       receiveShadow
     >
-      <meshStandardMaterial color={`#${props.color}`} />
+      {props.selected ? (
+        <meshStandardMaterial color={`red`} />
+      ) : (
+        <meshStandardMaterial color={`#${props.color}`} />
+      )}
       <Text
         position={[0, -props.size.y / 2 + 0.4, props.size.z / 2 + 0.05]}
         font={BOLD_FONT}
+        color="black"
         fontSize={0.4}
         lineHeight={2}
         textAlign="center"
