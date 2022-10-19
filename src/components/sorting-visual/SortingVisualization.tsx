@@ -33,6 +33,7 @@ const SortingVisulization: FC = () => {
           value: Math.floor(Math.random() * 100 + 1),
           color: "FFFFFF",
           selected: false,
+          checking: false,
           id: Math.random(), // should use UID
         })),
     [sortAmount]
@@ -66,9 +67,7 @@ const SortingVisulization: FC = () => {
           key={value.id}
           position={new Vector3(i * 1.2, 0, 0)}
           size={new Vector3(1, value.value / 5, 1)}
-          color={value.color}
-          value={value.value}
-          selected={value.selected}
+          {...{ ...value }}
         />
       ))}
     </>

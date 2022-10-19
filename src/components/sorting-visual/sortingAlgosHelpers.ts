@@ -1,6 +1,6 @@
 import { VisualArray } from "../../redux/state";
 
-export const swap = (
+const swap = (
   arr: VisualArray,
   index1: number,
   index2: number,
@@ -9,34 +9,39 @@ export const swap = (
   const temp = arr[index1];
   arr[index1] = arr[index2];
   arr[index2] = temp;
-  steps.push([...arr]);
+  const newArr = [...arr].map((value, i) => ({
+    ...value,
+    selected: i === index1,
+    checking: i === index2,
+  }));
+  steps.push(newArr);
 };
 
-export const getValue = (
+const compareTwo = (
   index: number,
+  targetIndex: number,
+  compareFunc: (num1: number, num2: number) => boolean,
   arr: VisualArray,
   steps: VisualArray[]
 ) => {
-  const obj = arr[index];
-  if (obj) {
-    const newArr = [...arr].map((value, i) =>
-      i === index
-        ? {
-            ...value,
-            selected: true,
-          }
-        : value
-    );
-    steps.push(newArr);
-  }
-  return obj?.value;
+  const newArr = [...arr].map((value, i) => ({
+    ...value,
+    selected: i === index,
+    checking: i === targetIndex,
+  }));
+  steps.push(newArr);
+  return compareFunc(arr[index]?.value, arr[targetIndex]?.value);
 };
 
 export const insertionSort = (arr: VisualArray) => {
   const steps: VisualArray[] = [];
   for (let i = 1; i < arr.length; i++) {
     let j = i;
-    while (j > 0 && getValue(j, arr, steps) < getValue(j - 1, arr, steps)) {
+
+    while (
+      j > 0 &&
+      compareTwo(j, j - 1, (num1, num2) => num1 < num2, arr, steps)
+    ) {
       swap(arr, j - 1, j, steps);
       j--;
     }
@@ -48,7 +53,7 @@ export const bubbleSort = (arr: VisualArray) => {
   const steps: VisualArray[] = [];
   for (let i = 0; i < arr.length; i++) {
     for (let j = 0; j < arr.length; j++) {
-      if (getValue(j, arr, steps) > getValue(j + 1, arr, steps)) {
+      if (compareTwo(j, j + 1, (num1, num2) => num1 > num2, arr, steps)) {
         swap(arr, j, j + 1, steps);
       }
     }
@@ -61,7 +66,7 @@ export const selectionSort = (arr: VisualArray) => {
   for (let i = 0; i < arr.length - 1; i++) {
     let minIndex = i;
     for (let j = i + 1; j < arr.length; j++) {
-      if (getValue(j, arr, steps) < getValue(minIndex, arr, steps)) {
+      if (compareTwo(j, minIndex, (num1, num2) => num1 < num2, arr, steps)) {
         minIndex = j;
       }
     }

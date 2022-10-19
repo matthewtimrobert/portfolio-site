@@ -10,6 +10,7 @@ interface Props {
   color: string;
   value: number;
   selected: boolean;
+  checking: boolean;
 }
 
 const SortingVisualBox: FC<Props> = (props) => {
@@ -36,6 +37,8 @@ const SortingVisualBox: FC<Props> = (props) => {
       receiveShadow
     >
       {props.selected ? (
+        <meshStandardMaterial color={`green`} />
+      ) : props.checking ? (
         <meshStandardMaterial color={`red`} />
       ) : (
         <meshStandardMaterial color={`#${props.color}`} />
