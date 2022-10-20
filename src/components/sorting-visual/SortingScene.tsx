@@ -5,9 +5,9 @@ import { useAppSelector } from "../../redux/configureStore";
 import { getNavType, getSortingAlgo } from "../../redux/selector";
 import { NavType } from "../../redux/state";
 import { getAlgoLabel } from "./sortingAlgosHelpers";
-import SortingVisulization from "./SortingVisualization";
+import SortingContent from "./SortingContent";
 
-const SortingVisualContent: FC = () => {
+const SortingScene: FC = () => {
   const showVisual = useAppSelector(getNavType) === NavType.SORTING_VISUAL;
   const sortingAlgo = useAppSelector(getSortingAlgo);
 
@@ -33,7 +33,7 @@ const SortingVisualContent: FC = () => {
         <shadowMaterial opacity={0.5} />
       </Plane>
       <Bounds fit clip observe margin={1}>
-        <SortingVisulization />
+        <SortingContent />
       </Bounds>
 
       <Text
@@ -52,4 +52,4 @@ const SortingVisualContent: FC = () => {
   ) : null;
 };
 
-export default SortingVisualContent;
+export default SortingScene;

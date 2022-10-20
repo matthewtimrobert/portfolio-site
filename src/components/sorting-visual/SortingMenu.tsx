@@ -36,7 +36,7 @@ import {
   SortingVisualType,
 } from "./sortingAlgosHelpers";
 
-const SortingVisualMenu: FC = () => {
+const SortingMenu: FC = () => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const sortingAlgo = useAppSelector(getSortingAlgo);
   const sortingSpeed = useAppSelector(getSortingSpeed);
@@ -194,4 +194,4 @@ const SortingVisualMenu: FC = () => {
   );
 };
 
-export default SortingVisualMenu;
+export default SortingMenu;

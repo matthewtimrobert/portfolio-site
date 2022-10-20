@@ -15,9 +15,9 @@ import {
 } from "../../redux/selector";
 import { NavType, VisualArray } from "../../redux/state";
 import { getAlgo, SortingVisualType } from "./sortingAlgosHelpers";
-import SortingVisualBox from "./SortingVisualBox";
+import SortingBox from "./SortingBox";
 
-const SortingVisulization: FC = () => {
+const SortingContent: FC = () => {
   const showVisual = useAppSelector(getNavType) === NavType.SORTING_VISUAL;
   const sortingAnimations = useAppSelector(getSortingAnimations);
   const sortingSpeed = useAppSelector(getSortingSpeed);
@@ -91,7 +91,7 @@ const SortingVisulization: FC = () => {
       return (
         <group>
           {sortingAnimations[0]?.map((value, i) => (
-            <SortingVisualBox
+            <SortingBox
               key={value.value}
               position={
                 new Vector3(-sortingAnimations[0].length / 2 + i * 1.2, 0, 0)
@@ -109,7 +109,7 @@ const SortingVisulization: FC = () => {
             const angle = ((Math.PI * 2) / sortingAnimations[0].length) * i;
             const R = sortingAnimations[0].length / 4;
             return (
-              <SortingVisualBox
+              <SortingBox
                 key={value.id}
                 position={
                   new Vector3(R * Math.cos(angle), 0, R * Math.sin(angle))
@@ -128,7 +128,7 @@ const SortingVisulization: FC = () => {
             const angle = ((Math.PI * 2) / sortingAnimations[0].length) * 3 * i;
             const R = sortingAnimations[0].length / 32 + i / 2;
             return (
-              <SortingVisualBox
+              <SortingBox
                 key={value.id}
                 position={
                   new Vector3(R * Math.cos(angle), 0, R * Math.sin(angle))
@@ -147,7 +147,7 @@ const SortingVisulization: FC = () => {
             const angle = (Math.PI / 4) * i;
             const R = sortingAnimations[0].length / 32 + i / 2;
             return (
-              <SortingVisualBox
+              <SortingBox
                 key={value.id}
                 position={
                   new Vector3(R * Math.cos(angle), 0, R * Math.sin(angle))
@@ -166,7 +166,7 @@ const SortingVisulization: FC = () => {
             const angle = (Math.PI / 2) * i;
             const R = i;
             return (
-              <SortingVisualBox
+              <SortingBox
                 key={value.id}
                 position={
                   new Vector3(R * Math.cos(angle), 0, R * Math.sin(angle))
@@ -183,4 +183,4 @@ const SortingVisulization: FC = () => {
   }
 };
 
-export default SortingVisulization;
+export default SortingContent;

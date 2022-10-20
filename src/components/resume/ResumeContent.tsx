@@ -1,99 +1,51 @@
-import { Scroll, ScrollControls } from "@react-three/drei";
-import { useThree } from "@react-three/fiber";
-import { FC, useEffect } from "react";
-import { Vector3 } from "three";
+import { useBounds } from "@react-three/drei";
+import { FC, useEffect, useState } from "react";
+import { Object3D } from "three";
 import { education, expierences, projects } from "../../assets/constants";
 import { useAppSelector } from "../../redux/configureStore";
 import { getNavType } from "../../redux/selector";
 import { NavType } from "../../redux/state";
-import SpotlightTrack from "../SpotlightTrack";
 import ResumeItem from "./ResumeItem";
 import ResumeTitle from "./ResumeTitle";
 
-const color = "grey";
-const ResumeContent: FC = () => {
-  const showResume = useAppSelector(getNavType) === NavType.RESUME;
-  const { camera } = useThree();
+const ResumeItems: FC = () => {
+  const [currObject, setCurrObject] = useState<Object3D | null>(null);
 
-  // init camera when nav change
+  const showResume = useAppSelector(getNavType) === NavType.RESUME;
+  const bounds = useBounds();
   useEffect(() => {
     if (showResume) {
-      camera.position.x = 0;
-      camera.position.y = 0;
-      camera.position.z = 5;
-      camera.lookAt(0, 0, 0);
+      bounds.refresh().fit();
     }
-  }, [showResume, camera]);
+  }, [showResume, bounds]);
 
-  // we keep the component mounted but very far away so we don't have to rerender the meshes
   return (
-    <group position={showResume ? [0, 0, 0] : [100, 1000, 100]}>
-      <mesh receiveShadow>
-        <planeGeometry args={[50, 50]} />
-        <meshPhongMaterial color="lightblue" />
-      </mesh>
-      {showResume ? (
-        <>
-          <directionalLight position={[5, 0, 5]} castShadow intensity={0.2} />
-          <SpotlightTrack position={new Vector3(4, 3, 3)} />
-          <SpotlightTrack position={new Vector3(-4, 3, 3)} />
-        </>
-      ) : null}
-
-      <ScrollControls
-        pages={2}
-        distance={1}
-        damping={5}
-        horizontal={false}
-        infinite={false}
-      >
-        <Scroll>
-          <ResumeTitle
-            titleText="Education"
-            startingHeight={2}
-            backgroundColor={color}
-          />
-          {education.map((education, i) => (
-            <ResumeItem
-              key={i}
-              name={`${i}`}
-              startingHeight={-i * 2}
-              {...education}
-              backgroundColor={color}
-            />
-          ))}
-          <ResumeTitle
-            titleText="Experience"
-            startingHeight={-2}
-            backgroundColor={color}
-          />
-          {expierences.map((expierence, i) => (
-            <ResumeItem
-              key={i}
-              name={`${i}`}
-              startingHeight={-4 - i * 2}
-              {...expierence}
-              backgroundColor={color}
-            />
-          ))}
-          <ResumeTitle
-            titleText="Projects"
-            startingHeight={-10}
-            backgroundColor={color}
-          />
-          {projects.map((project, i) => (
-            <ResumeItem
-              key={i}
-              name={`${i}`}
-              startingHeight={-12 - i * 2}
-              {...project}
-              backgroundColor={color}
-            />
-          ))}
-        </Scroll>
-      </ScrollControls>
+    <group
+      onClick={(e) => {
+        e.stopPropagation();
+        if (e.delta < 2 && currObject !== e.object) {
+          bounds.refresh(e.object).fit();
+          setCurrObject(e.object);
+        } else {
+          bounds.refresh().fit();
+          setCurrObject(null);
+        }
+      }}
+    >
+      <ResumeTitle titleText="Education" x={0} z={-2} />
+      {education.map((item, i) => (
+        <ResumeItem key={i} x={0} z={-i * 2} {...item} />
+      ))}
+      <ResumeTitle titleText="Experience" x={6} z={-2} />
+      {expierences.map((item, i) => (
+        <ResumeItem key={i} x={6} z={i * 2} {...item} />
+      ))}
+      <ResumeTitle titleText="Projects" x={12} z={-2} />
+      {projects.map((item, i) => (
+        <ResumeItem key={i} x={12} z={i * 2} {...item} />
+      ))}
     </group>
   );
 };
 
-export default ResumeContent;
+export default ResumeItems;

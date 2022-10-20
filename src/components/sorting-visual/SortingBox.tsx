@@ -13,7 +13,7 @@ interface Props {
   checking: boolean;
 }
 
-const SortingVisualBox: FC<Props> = (props) => {
+const SortingBox: FC<Props> = (props) => {
   const ref = useRef<THREE.Mesh>(null);
 
   useFrame(() => {
@@ -60,4 +60,4 @@ const SortingVisualBox: FC<Props> = (props) => {
   );
 };
 
-export default SortingVisualBox;
+export default SortingBox;

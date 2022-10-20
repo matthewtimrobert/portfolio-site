@@ -1,15 +1,15 @@
 import { FC } from "react";
-import Menucontent from "./menu/MenuContent";
-import ResumeContent from "./resume/ResumeContent";
-import SortingVisualContent from "./sorting-visual/SortingVisualContent";
+import MenuScene from "./menu/MenuScene";
+import ResumeScene from "./resume/ResumeScene";
+import SortingScene from "./sorting-visual/SortingScene";
 
 const CanvasContent: FC = () => {
   return (
     <>
       <color attach="background" args={["lightblue"]} />
-      <Menucontent />
-      <ResumeContent />
-      <SortingVisualContent />
+      <MenuScene />
+      <ResumeScene />
+      <SortingScene />
     </>
   );
 };

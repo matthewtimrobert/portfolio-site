@@ -26,7 +26,7 @@ export const expierences = [
     ],
   },
   {
-    titleText: "Research Lab, University of North Carolina Wilmington",
+    titleText: "Research Lab - UNCW",
     dateText: "Apr 2020 – June 2020",
     bullets: [
       "Work alongside psychologist research students and professor",
@@ -58,7 +58,7 @@ export const projects = [
     ],
   },
   {
-    titleText: "Roblox, Game Developer, Owner and Lead Programmer",
+    titleText: "Game Developer - Roblox",
     dateText: "Summer 2021",
     bullets: [
       "Responsible for managing and commissioning a team of developers including 3d-modelers, artists, and game builders",
