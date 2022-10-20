@@ -14,7 +14,6 @@ const MenuGround: FC<Props> = (props) => {
 
   return (
     <Plane args={[200, 200]} ref={ref} receiveShadow castShadow>
-      {/* <meshStandardMaterial color="lightblue" /> */}
       <shadowMaterial opacity={0.5} />
     </Plane>
   );

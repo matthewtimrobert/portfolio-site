@@ -2,7 +2,7 @@ import { BoxProps, useBox } from "@react-three/cannon";
 import { RoundedBox } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
 import { FC, useState } from "react";
-import { Vector3 } from "three";
+import { Mesh, Vector3 } from "three";
 import {
   MENU_BOX_NAME,
   MENU_BOX_PUSHER_NAME,
@@ -19,7 +19,7 @@ const MenuBox: FC<Props> = (props) => {
   const [shrink, setShrink] = useState(false);
   const [bounce, setBounce] = useState(false);
 
-  const [ref, api] = useBox(() => ({
+  const [ref, api] = useBox<Mesh>(() => ({
     mass: 1,
     position: [props.position.x, props.position.y, props.position.z],
     args: [props.size.x, props.size.y, props.size.z],
@@ -71,7 +71,7 @@ const MenuBox: FC<Props> = (props) => {
       smoothness={4}
       castShadow
       receiveShadow
-      ref={ref as any}
+      ref={ref}
     >
       <meshNormalMaterial attach="material" />
     </RoundedBox>

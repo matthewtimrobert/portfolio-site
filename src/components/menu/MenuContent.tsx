@@ -23,33 +23,30 @@ const MenuContent: FC = () => {
     <>
       <MenuBoxPusher position={new Vector3(10, 2, 0)} side="right" />
       <MenuBoxPusher position={new Vector3(-10, 2, 0)} side="left" />
-
       <MenuButton
         size={new Vector3(5, 4, 1)}
         position={new Vector3(4, 0.5, -1)}
-        boxProps={{ rotation: [-Math.PI / 2, 0, 0] }}
-        text={`Resume`}
+        text="Resume"
         onClick={() => dispatch(setNavType(NavType.RESUME))}
       />
       <MenuButton
         size={new Vector3(5, 4, 1)}
         position={new Vector3(-4, 0.5, -1)}
-        boxProps={{ rotation: [-Math.PI / 2, 0, 0] }}
-        text={`Sorting Visualization`}
+        text="Sorting Visualization"
         onClick={() => dispatch(setNavType(NavType.SORTING_VISUAL))}
       />
       <MenuButton
         size={new Vector3(2, 2, 0.5)}
         position={new Vector3(-3, 0.25, 3)}
-        boxProps={{ rotation: [-Math.PI / 2, 0, 0] }}
-        text={`Email`}
+        text="Email"
+        hoverText="matthewtimroberts@gmail.com"
         onClick={() => window.open("mailto:matthewtimroberts@gmail.com")}
       />
       <MenuButton
         size={new Vector3(2, 2, 0.5)}
         position={new Vector3(0, 0.25, 3)}
-        boxProps={{ rotation: [-Math.PI / 2, 0, 0] }}
-        text={`Linkedin`}
+        text="Linkedin"
+        hoverText="linkedin.com/in/matthewtimroberts"
         onClick={() =>
           window.open("https://www.linkedin.com/in/matthewtimroberts/")
         }
@@ -57,9 +54,9 @@ const MenuContent: FC = () => {
       <MenuButton
         size={new Vector3(2, 2, 0.5)}
         position={new Vector3(3, 0.25, 3)}
-        boxProps={{ rotation: [-Math.PI / 2, 0, 0] }}
-        text={`Github`}
-        onClick={() => window.open("https://github.com/matthewtimrobert")}
+        text="Github"
+        hoverText="github.com/matthewtimrobert"
+        onClick={() => window.open("https://wwww.github.com/matthewtimrobert")}
       />
     </>
   );

@@ -1,9 +1,8 @@
 import { RoundedBox, Text } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
 import { FC, useMemo, useRef, useState } from "react";
-import * as THREE from "three";
-import { Vector3 } from "three";
-import { BOLD_FONT } from "../../assets/constants";
+import { Mesh, Vector3 } from "three";
+import { BG_COLOR, BOLD_FONT, TXT_COLOR } from "../../assets/constants";
 
 interface Props {
   x: number;
@@ -17,7 +16,7 @@ const PARENT_PADDING = 0.2;
 
 const PortfolioItem: FC<Props> = (props: Props) => {
   const [hovering, setHovering] = useState(false);
-  const ref = useRef<THREE.Mesh>(null);
+  const ref = useRef<Mesh>(null);
 
   const TITLE_TEXT_SIZE = 0.15;
   const BULLET_TEXT_SIZE = 0.1;
@@ -56,7 +55,7 @@ const PortfolioItem: FC<Props> = (props: Props) => {
         castShadow
         receiveShadow
       >
-        <meshStandardMaterial color={"white"} />
+        <meshStandardMaterial color={BG_COLOR} />
       </RoundedBox>
       <Text
         position={[
@@ -70,7 +69,7 @@ const PortfolioItem: FC<Props> = (props: Props) => {
         textAlign="left"
         anchorX="left"
         anchorY="top"
-        color="black"
+        color={TXT_COLOR}
       >
         {props.titleText}
       </Text>
@@ -83,7 +82,7 @@ const PortfolioItem: FC<Props> = (props: Props) => {
         textAlign="right"
         anchorX="right"
         anchorY="top"
-        color="black"
+        color={TXT_COLOR}
       >
         {props.dateText}
       </Text>
@@ -100,7 +99,7 @@ const PortfolioItem: FC<Props> = (props: Props) => {
         textAlign="left"
         anchorX="left"
         anchorY="top"
-        color="black"
+        color={TXT_COLOR}
       >
         {props.bullets.reduce((prev, curr) => `${prev} \n- ${curr}`, "")}
       </Text>

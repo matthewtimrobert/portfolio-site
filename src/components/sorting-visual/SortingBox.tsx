@@ -1,8 +1,8 @@
 import { RoundedBox, Text } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
 import { FC, useRef } from "react";
-import { Vector3 } from "three";
-import { BOLD_FONT } from "../../assets/constants";
+import { Mesh, Vector3 } from "three";
+import { BOLD_FONT, TXT_COLOR } from "../../assets/constants";
 
 interface Props {
   size: Vector3;
@@ -14,7 +14,7 @@ interface Props {
 }
 
 const SortingBox: FC<Props> = (props) => {
-  const ref = useRef<THREE.Mesh>(null);
+  const ref = useRef<Mesh>(null);
 
   useFrame(() => {
     if (ref.current?.position !== props.position)
@@ -47,7 +47,7 @@ const SortingBox: FC<Props> = (props) => {
       <Text
         position={[0, -props.size.y / 2 + 0.4, props.size.z / 2 + 0.05]}
         font={BOLD_FONT}
-        color="black"
+        color={TXT_COLOR}
         fontSize={0.4}
         lineHeight={2}
         textAlign="center"

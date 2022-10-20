@@ -1,14 +1,15 @@
 import { SpotLight } from "@react-three/drei";
 import { useFrame, useThree } from "@react-three/fiber";
 import { FC, useRef } from "react";
-import { Vector3 } from "three";
+import { SpotLight as SpotLightType, Vector3 } from "three";
+import { BG_COLOR } from "../assets/constants";
 
 interface Props {
   position: Vector3;
 }
 
 const SpotlightTrack: FC<Props> = (props: Props) => {
-  const ref = useRef<THREE.SpotLight | undefined>();
+  const ref = useRef<SpotLightType>(null);
   const { viewport } = useThree();
 
   useFrame((state) => {
@@ -25,7 +26,7 @@ const SpotlightTrack: FC<Props> = (props: Props) => {
   return (
     <SpotLight
       castShadow
-      ref={ref as React.Ref<THREE.SpotLight>}
+      ref={ref}
       penumbra={1}
       distance={9}
       angle={0.35}
@@ -33,7 +34,7 @@ const SpotlightTrack: FC<Props> = (props: Props) => {
       anglePower={10}
       intensity={0.5}
       position={props.position}
-      color={"white"}
+      color={BG_COLOR}
     />
   );
 };

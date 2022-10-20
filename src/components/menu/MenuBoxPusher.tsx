@@ -2,8 +2,8 @@ import { BoxProps, useBox } from "@react-three/cannon";
 import { RoundedBox } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
 import { FC, useCallback, useState } from "react";
-import { Vector3 } from "three";
-import { MENU_BOX_PUSHER_NAME } from "../../assets/constants";
+import { Mesh, Vector3 } from "three";
+import { BG_COLOR, MENU_BOX_PUSHER_NAME } from "../../assets/constants";
 
 interface Props {
   boxProps?: BoxProps;
@@ -25,7 +25,7 @@ const MenuBoxPusher: FC<Props> = (props) => {
     }
   }, [launching]);
 
-  const [ref, api] = useBox(() => ({
+  const [ref, api] = useBox<Mesh>(() => ({
     mass: 1,
     type: "Kinematic",
     position: [props.position.x, props.position.y, props.position.z],
@@ -69,10 +69,10 @@ const MenuBoxPusher: FC<Props> = (props) => {
       smoothness={4}
       castShadow
       receiveShadow
-      ref={ref as any}
+      ref={ref}
       onClick={launch}
     >
-      <meshStandardMaterial color={"#FFFF"} />
+      <meshStandardMaterial color={BG_COLOR} />
     </RoundedBox>
   );
 };

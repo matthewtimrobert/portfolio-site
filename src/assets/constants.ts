@@ -85,3 +85,7 @@ export const MENU_BUTTON_NAME = "MENU_BUTTON_NAME";
 export const MENU_BOX_NAME = "MENU_BOX_NAME";
 export const MENU_BOX_SHRINKING_NAME = "MENU_BOX_SHRINKING_NAME";
 export const MENU_BOX_PUSHER_NAME = "MENU_BOX_PUSHER_NAME";
+
+export const BG_COLOR = "white";
+export const TXT_COLOR = "black";
+export const BG1_COLOR = "lightblue";
