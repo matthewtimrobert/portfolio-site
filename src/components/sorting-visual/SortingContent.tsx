@@ -60,7 +60,7 @@ const SortingContent: FC = () => {
         if (allowed) {
           setAnimationArray(target);
           return new Promise((resolve) =>
-            setTimeout(resolve, 100 * (10 / sortingSpeed) || 50)
+            setTimeout(resolve, 100 * (1 / sortingSpeed) || 50)
           );
         }
       };
