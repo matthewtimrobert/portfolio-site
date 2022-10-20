@@ -1,6 +1,6 @@
 import { Bounds, OrbitControls, Plane, Text } from "@react-three/drei";
 import { FC } from "react";
-import { BOLD_FONT, TXT_COLOR } from "../../assets/constants";
+import { BG_COLOR, BOLD_FONT } from "../../assets/constants";
 import { useAppSelector } from "../../redux/configureStore";
 import { getNavType, getSortingAlgo } from "../../redux/selector";
 import { NavType } from "../../redux/state";
@@ -45,7 +45,7 @@ const SortingScene: FC = () => {
         textAlign="center"
         anchorX="center"
         anchorY="middle"
-        color={TXT_COLOR}
+        color={BG_COLOR}
       >
         {getAlgoLabel(sortingAlgo)}
       </Text>
