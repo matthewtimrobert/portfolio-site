@@ -42,7 +42,7 @@ const SortingBox: FC<Props> = (props) => {
       ) : props.checking ? (
         <meshStandardMaterial color={`red`} />
       ) : (
-        <meshStandardMaterial color={`#${props.color}`} />
+        <meshStandardMaterial color={`${props.color}`} />
       )}
       <Text
         position={[0, -props.size.y / 2 + 0.4, props.size.z / 2 + 0.05]}
