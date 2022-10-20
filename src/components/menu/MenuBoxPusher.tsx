@@ -72,7 +72,7 @@ const MenuBoxPusher: FC<Props> = (props) => {
       ref={ref as any}
       onClick={launch}
     >
-      <meshStandardMaterial color={"#e2725b"} />
+      <meshStandardMaterial color={"#FFFF"} />
     </RoundedBox>
   );
 };

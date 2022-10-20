@@ -35,6 +35,7 @@ const Menucontent: FC = () => {
     <group position={showMenu ? [0, 0, 0] : [100, 1000, 100]}>
       {showMenu ? (
         <>
+          <ambientLight intensity={0.5} />
           <directionalLight
             position={[5, 10, 5]}
             castShadow

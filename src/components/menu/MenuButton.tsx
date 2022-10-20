@@ -61,7 +61,7 @@ const Menubutton: FC<Props> = (props) => {
       onPointerOver={() => setHovering(true)}
       onPointerLeave={() => setHovering(false)}
     >
-      <meshStandardMaterial color={hovering ? "#e39d8f" : "#e2725b"} />
+      <meshStandardMaterial color={hovering ? "lightgrey" : "#FFFFFF"} />
       <Text
         position={[0, 0, props.size.z / 2 + 0.05]}
         font={BOLD_FONT}
@@ -70,6 +70,7 @@ const Menubutton: FC<Props> = (props) => {
         textAlign="center"
         anchorX="center"
         anchorY="middle"
+        color={"black"}
       >
         {props.text}
       </Text>
