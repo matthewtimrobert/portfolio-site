@@ -21,31 +21,6 @@ const reducer: Reducer<AppState, Action> = (
       };
     }
 
-    case ActionTypes.SET_SORTING_ANIMATIONS: {
-      return {
-        ...state,
-        sortingAnimations: action.payload,
-      };
-    }
-
-    // only remove first animation if there's more animations
-    case ActionTypes.REMOVE_FIRST_ANIMATION: {
-      return {
-        ...state,
-        sortingAnimations:
-          state.sortingAnimations.length > 1
-            ? [...(state.sortingAnimations.slice(1) || [])]
-            : state.sortingAnimations,
-      };
-    }
-
-    case ActionTypes.ADD_ANIMATION: {
-      return {
-        ...state,
-        sortingAnimations: [...state.sortingAnimations, action.payload],
-      };
-    }
-
     case ActionTypes.SET_SORTING_ALGO: {
       return {
         ...state,
@@ -71,13 +46,6 @@ const reducer: Reducer<AppState, Action> = (
       return {
         ...state,
         sortAmount: action.payload,
-      };
-    }
-
-    case ActionTypes.SET_SORTING_VISUAL_TYPE: {
-      return {
-        ...state,
-        sortingVisualType: action.payload,
       };
     }
 

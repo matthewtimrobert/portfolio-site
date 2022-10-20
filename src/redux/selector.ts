@@ -7,9 +7,6 @@ export const getNavType = (state: RootState) => state.currentNav;
 
 export const getShowMenuTip = (state: RootState) => state.showMenuTip;
 
-export const getSortingAnimations = (state: RootState) =>
-  state.sortingAnimations;
-
 export const getSortingAlgo = (state: RootState) => state.sortingAlgo;
 
 export const getSortingSpeed = (state: RootState) => state.sortingSpeed;

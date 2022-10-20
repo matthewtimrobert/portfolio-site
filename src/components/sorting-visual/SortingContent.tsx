@@ -1,33 +1,33 @@
 import { useBounds } from "@react-three/drei";
-import { FC, useEffect, useMemo } from "react";
+import { FC, useEffect, useMemo, useState } from "react";
 import { useDispatch } from "react-redux";
 import { Vector3 } from "three";
 import { BG_COLOR } from "../../assets/constants";
-import { removeFirstAnimation, setSortingAnimations } from "../../redux/action";
 import { useAppSelector } from "../../redux/configureStore";
 import {
   getNavType,
   getRefreshAlgo,
   getSortAmount,
   getSortingAlgo,
-  getSortingAnimations,
   getSortingSpeed,
   getSortingVisualType,
 } from "../../redux/selector";
-import { NavType, VisualArray } from "../../redux/state";
-import { getAlgo, SortingVisualType } from "./sortingAlgosHelpers";
+import { NavType } from "../../redux/state";
+import { getAlgo, SortingVisualType, VisualArray } from "./sortingAlgosHelpers";
 import SortingBox from "./SortingBox";
 
 const SortingContent: FC = () => {
   const showVisual = useAppSelector(getNavType) === NavType.SORTING_VISUAL;
-  const sortingAnimations = useAppSelector(getSortingAnimations);
   const sortingSpeed = useAppSelector(getSortingSpeed);
   const sortingAlgo = useAppSelector(getSortingAlgo);
   const refreshAlgo = useAppSelector(getRefreshAlgo);
   const sortAmount = useAppSelector(getSortAmount);
   const sortingVisualType = useAppSelector(getSortingVisualType);
 
+  const algoFunc = useMemo(() => getAlgo(sortingAlgo), [sortingAlgo]);
+
   const bounds = useBounds();
+  const dispatch = useDispatch();
 
   // generate step 1 array
   const startingArray: VisualArray = useMemo(
@@ -48,17 +48,35 @@ const SortingContent: FC = () => {
     [sortAmount]
   );
 
-  const algoFunc = useMemo(() => getAlgo(sortingAlgo), [sortingAlgo]);
-  const dispatch = useDispatch();
+  const [animationArray, setAnimationArray] =
+    useState<VisualArray>(startingArray);
 
   // update sorting animations
   useEffect(() => {
+    let allowed = true;
+
     if (showVisual) {
-      dispatch(
-        setSortingAnimations([startingArray, ...algoFunc([...startingArray])])
-      );
+      const setAnimationArrayAsync = async (target: VisualArray) => {
+        if (allowed) {
+          setAnimationArray(target);
+          return new Promise((resolve) =>
+            setTimeout(resolve, 100 * (10 / sortingSpeed) || 50)
+          );
+        }
+      };
+      algoFunc([...startingArray], setAnimationArrayAsync);
     }
-  }, [showVisual, startingArray, dispatch, bounds, algoFunc, refreshAlgo]);
+    return () => {
+      allowed = false;
+    };
+  }, [
+    showVisual,
+    startingArray,
+    dispatch,
+    algoFunc,
+    refreshAlgo,
+    sortingSpeed,
+  ]);
 
   // update camera
   useEffect(() => {
@@ -75,28 +93,14 @@ const SortingContent: FC = () => {
     startingArray,
   ]);
 
-  // play animations
-  useEffect(() => {
-    const timer = setInterval(() => {
-      if (showVisual) {
-        dispatch(removeFirstAnimation());
-      }
-    }, 100 * (10 / sortingSpeed) || 50);
-    return () => {
-      clearTimeout(timer);
-    };
-  }, [sortingSpeed, showVisual, dispatch]);
-
   switch (sortingVisualType) {
     case SortingVisualType.VISUAL_LINE:
       return (
         <group>
-          {sortingAnimations[0]?.map((value, i) => (
+          {animationArray?.map((value, i) => (
             <SortingBox
               key={value.value}
-              position={
-                new Vector3(-sortingAnimations[0].length / 2 + i * 1.2, 0, 0)
-              }
+              position={new Vector3(-animationArray.length / 2 + i * 1.2, 0, 0)}
               size={new Vector3(1, value.value / 5, 1)}
               {...{ ...value }}
             />
@@ -106,9 +110,9 @@ const SortingContent: FC = () => {
     case SortingVisualType.VISUAL_CIRCLE:
       return (
         <group>
-          {sortingAnimations[0]?.map((value, i) => {
-            const angle = ((Math.PI * 2) / sortingAnimations[0].length) * i;
-            const R = sortingAnimations[0].length / 4;
+          {animationArray?.map((value, i) => {
+            const angle = ((Math.PI * 2) / animationArray.length) * i;
+            const R = animationArray.length / 4;
             return (
               <SortingBox
                 key={value.id}
@@ -125,9 +129,9 @@ const SortingContent: FC = () => {
     case SortingVisualType.VISUAL_SPIRAL:
       return (
         <>
-          {sortingAnimations[0]?.map((value, i) => {
-            const angle = ((Math.PI * 2) / sortingAnimations[0].length) * 3 * i;
-            const R = sortingAnimations[0].length / 32 + i / 2;
+          {animationArray?.map((value, i) => {
+            const angle = ((Math.PI * 2) / animationArray.length) * 3 * i;
+            const R = animationArray.length / 32 + i / 2;
             return (
               <SortingBox
                 key={value.id}
@@ -144,9 +148,9 @@ const SortingContent: FC = () => {
     case SortingVisualType.VISUAL_STAR:
       return (
         <group>
-          {sortingAnimations[0]?.map((value, i) => {
+          {animationArray?.map((value, i) => {
             const angle = (Math.PI / 4) * i;
-            const R = sortingAnimations[0].length / 32 + i / 2;
+            const R = animationArray.length / 32 + i / 2;
             return (
               <SortingBox
                 key={value.id}
@@ -163,7 +167,7 @@ const SortingContent: FC = () => {
     case SortingVisualType.VISUAL_CROSS:
       return (
         <group>
-          {sortingAnimations[0]?.map((value, i) => {
+          {animationArray?.map((value, i) => {
             const angle = (Math.PI / 2) * i;
             const R = i;
             return (

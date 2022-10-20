@@ -2,7 +2,7 @@ import {
   SortingAlgos,
   SortingVisualType,
 } from "../components/sorting-visual/sortingAlgosHelpers";
-import { NavType, VisualArray } from "./state";
+import { NavType } from "./state";
 
 export enum ActionTypes {
   UPDATE_CURREN_NAV = "UPDATE_CURREN_NAV",
@@ -20,8 +20,6 @@ export enum ActionTypes {
 export type Action =
   | ReturnType<typeof setNavType>
   | ReturnType<typeof setShowMenuTip>
-  | ReturnType<typeof setSortingAnimations>
-  | ReturnType<typeof addAnimation>
   | ReturnType<typeof setSortingAlgo>
   | ReturnType<typeof setSortingSpeed>
   | ReturnType<typeof setRefreshAlgo>
@@ -41,21 +39,9 @@ export const setShowMenuTip = (showMenuTip: boolean) =>
     payload: showMenuTip,
   } as const);
 
-export const setSortingAnimations = (sortingAnimations: VisualArray[]) =>
-  ({
-    type: ActionTypes.SET_SORTING_ANIMATIONS,
-    payload: sortingAnimations,
-  } as const);
-
 export const removeFirstAnimation = () =>
   ({
     type: ActionTypes.REMOVE_FIRST_ANIMATION,
-  } as const);
-
-export const addAnimation = (sortingAnimation: VisualArray) =>
-  ({
-    type: ActionTypes.ADD_ANIMATION,
-    payload: sortingAnimation,
   } as const);
 
 export const setSortingAlgo = (sortingAlgo: SortingAlgos) =>

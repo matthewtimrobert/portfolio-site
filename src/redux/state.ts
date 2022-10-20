@@ -8,18 +8,10 @@ export enum NavType {
   MENU = "MENU",
   SORTING_VISUAL = "SORTING_VISUAL",
 }
-export type VisualArray = {
-  value: number;
-  color: string;
-  selected: boolean;
-  checking: boolean;
-  id?: number;
-}[];
 
 export interface AppState {
   currentNav: NavType;
   showMenuTip: boolean;
-  sortingAnimations: VisualArray[];
   sortingAlgo: SortingAlgos;
   sortingSpeed: number;
   refreshAlgo: boolean;
@@ -30,7 +22,6 @@ export interface AppState {
 export const createDefaultState = (): AppState => ({
   currentNav: NavType.MENU,
   showMenuTip: true,
-  sortingAnimations: [],
   sortingAlgo: SortingAlgos.INSERTION_SORT,
   sortingVisualType: SortingVisualType.VISUAL_LINE,
   sortingSpeed: 50,

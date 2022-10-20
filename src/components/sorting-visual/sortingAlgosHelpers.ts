@@ -1,77 +1,71 @@
-import { VisualArray } from "../../redux/state";
+export type VisualArray = {
+  value: number;
+  color: string;
+  selected: boolean;
+  checking: boolean;
+  id?: number;
+}[];
 
-const swap = (
+type CompareTwo = (
+  i: number,
+  j: number,
+  compareFunc: (num1: number, num2: number) => boolean
+) => Promise<boolean>;
+
+type Swap = (i: number, j: number) => Promise<void>;
+
+const insertionSort = async (
   arr: VisualArray,
-  index1: number,
-  index2: number,
-  steps: VisualArray[]
+  compareTwo: CompareTwo,
+  swap: Swap
 ) => {
-  const temp = arr[index1];
-  arr[index1] = arr[index2];
-  arr[index2] = temp;
-  const newArr = [...arr].map((value, i) => ({
-    ...value,
-    selected: i === index1,
-    checking: i === index2,
-  }));
-  steps.push(newArr);
-};
-
-const compareTwo = (
-  index: number,
-  targetIndex: number,
-  compareFunc: (num1: number, num2: number) => boolean,
-  arr: VisualArray,
-  steps: VisualArray[]
-) => {
-  const newArr = [...arr].map((value, i) => ({
-    ...value,
-    selected: i === index,
-    checking: i === targetIndex,
-  }));
-  steps.push(newArr);
-  return compareFunc(arr[index]?.value, arr[targetIndex]?.value);
-};
-
-const insertionSort = (arr: VisualArray, steps: VisualArray[]) => {
   for (let i = 1; i < arr.length; i++) {
     let j = i;
 
-    while (
-      j > 0 &&
-      compareTwo(j, j - 1, (num1, num2) => num1 < num2, arr, steps)
-    ) {
-      swap(arr, j - 1, j, steps);
+    while (j > 0 && (await compareTwo(j, j - 1, (num1, num2) => num1 < num2))) {
+      await swap(j - 1, j);
       j--;
     }
   }
 };
 
-const bubbleSort = (arr: VisualArray, steps: VisualArray[]) => {
+const bubbleSort = async (
+  arr: VisualArray,
+  compareTwo: CompareTwo,
+  swap: Swap
+) => {
   for (let i = 0; i < arr.length; i++) {
     for (let j = 0; j < arr.length; j++) {
-      if (compareTwo(j, j + 1, (num1, num2) => num1 > num2, arr, steps)) {
-        swap(arr, j, j + 1, steps);
+      if (await compareTwo(j, j + 1, (num1, num2) => num1 > num2)) {
+        await swap(j, j + 1);
       }
     }
   }
 };
 
-const selectionSort = (arr: VisualArray, steps: VisualArray[]) => {
+const selectionSort = async (
+  arr: VisualArray,
+  compareTwo: CompareTwo,
+  swap: Swap
+) => {
   for (let i = 0; i < arr.length - 1; i++) {
     let minIndex = i;
     for (let j = i + 1; j < arr.length; j++) {
-      if (compareTwo(j, minIndex, (num1, num2) => num1 < num2, arr, steps)) {
+      if (await compareTwo(j, minIndex, (num1, num2) => num1 < num2)) {
         minIndex = j;
       }
     }
     if (i !== minIndex) {
-      swap(arr, i, minIndex, steps);
+      await swap(i, minIndex);
     }
   }
 };
 
-const cocktailSort = (arr: VisualArray, steps: VisualArray[]) => {
+const cocktailSort = async (
+  arr: VisualArray,
+  compareTwo: CompareTwo,
+  swap: Swap
+) => {
   let start = 0,
     end = arr.length,
     swapped = true;
@@ -79,8 +73,8 @@ const cocktailSort = (arr: VisualArray, steps: VisualArray[]) => {
   while (swapped) {
     swapped = false;
     for (let i = start; i < end - 1; i++) {
-      if (compareTwo(i, i + 1, (num1, num2) => num1 > num2, arr, steps)) {
-        swap(arr, i, i + 1, steps);
+      if (await compareTwo(i, i + 1, (num1, num2) => num1 > num2)) {
+        await swap(i, i + 1);
         swapped = true;
       }
     }
@@ -90,8 +84,8 @@ const cocktailSort = (arr: VisualArray, steps: VisualArray[]) => {
 
     swapped = false;
     for (let i = end - 1; i > start; i--) {
-      if (compareTwo(i - 1, i, (num1, num2) => num1 > num2, arr, steps)) {
-        swap(arr, i, i - 1, steps);
+      if (await compareTwo(i - 1, i, (num1, num2) => num1 > num2)) {
+        await swap(i, i - 1);
 
         swapped = true;
       }
@@ -101,35 +95,60 @@ const cocktailSort = (arr: VisualArray, steps: VisualArray[]) => {
   }
 };
 
-const gnomeSort = (arr: VisualArray, steps: VisualArray[]) => {
+const gnomeSort = async (
+  arr: VisualArray,
+  compareTwo: CompareTwo,
+  swap: Swap
+) => {
   for (let i = 1; i < arr.length; i++) {
-    if (compareTwo(i - 1, i, (num1, num2) => num1 > num2, arr, steps)) {
+    if (await compareTwo(i - 1, i, (num1, num2) => num1 > num2)) {
       for (
         ;
-        i > 0 && compareTwo(i, i - 1, (num1, num2) => num1 < num2, arr, steps);
+        i > 0 && (await compareTwo(i, i - 1, (num1, num2) => num1 < num2));
         i--
       ) {
-        swap(arr, i, i - 1, steps);
+        await swap(i, i - 1);
       }
     }
   }
 };
 
-const wrapSort = (
-  sortingFunc: (arr: VisualArray, steps: VisualArray[]) => void
-) => {
-  return (arr: VisualArray) => {
-    const steps: VisualArray[] = [];
-    sortingFunc([...arr], steps);
-    // remove bools on last step
-    steps[steps.length - 1] = steps[steps.length - 1]?.map((v) => ({
-      ...v,
-      selected: false,
-      checking: false,
-    }));
-    return [...steps];
+const wrapSort =
+  (
+    sortingFunc: (arr: VisualArray, compareTwo: CompareTwo, swap: Swap) => void
+  ) =>
+  (
+    arr: VisualArray,
+    setAnimationArrayAsync: (arr: VisualArray) => Promise<unknown>
+  ) => {
+    const compareTwo = async (
+      i: number,
+      j: number,
+      compareFunc: (num1: number, num2: number) => boolean
+    ) => {
+      const newArr = [...arr].map((value, _i) => ({
+        ...value,
+        selected: _i === i,
+        checking: _i === j,
+      }));
+      await setAnimationArrayAsync(newArr);
+      return compareFunc(arr[i]?.value, arr[j]?.value);
+    };
+
+    const swap = async (i: number, j: number): Promise<void> => {
+      const temp = arr[i];
+      arr[i] = arr[j];
+      arr[j] = temp;
+      const newArr = [...arr].map((value, _i) => ({
+        ...value,
+        selected: _i === i,
+        checking: _i === j,
+      }));
+      await setAnimationArrayAsync(newArr);
+    };
+
+    sortingFunc([...arr], compareTwo, swap);
   };
-};
 
 export enum SortingAlgos {
   SELECTION_SORT = "SELECTION_SORT",
