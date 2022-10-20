@@ -2,6 +2,7 @@ import { useBounds } from "@react-three/drei";
 import { FC, useEffect, useMemo } from "react";
 import { useDispatch } from "react-redux";
 import { Vector3 } from "three";
+import { BG_COLOR } from "../../assets/constants";
 import { removeFirstAnimation, setSortingAnimations } from "../../redux/action";
 import { useAppSelector } from "../../redux/configureStore";
 import {
@@ -35,7 +36,7 @@ const SortingContent: FC = () => {
         .fill(1)
         .map((_, i) => ({
           value: i,
-          color: "FFFFFF",
+          color: BG_COLOR,
           selected: false,
           checking: false,
           id: Math.random(), // should use UID

@@ -1,7 +1,7 @@
 import { RoundedBox, Text } from "@react-three/drei";
 import { FC, useRef } from "react";
 import { Mesh, Vector3 } from "three";
-import { BOLD_FONT, TXT_COLOR } from "../../assets/constants";
+import { BG_COLOR, BOLD_FONT, TXT_COLOR } from "../../assets/constants";
 
 interface Props {
   x: number;
@@ -33,7 +33,7 @@ const TitleBox: FC<Props> = (props: Props) => {
         castShadow
         receiveShadow
       >
-        <meshStandardMaterial color="white" />
+        <meshStandardMaterial color={BG_COLOR} />
       </RoundedBox>
       <Text
         position={[0, 0, parentSize.z / 2 + 0.01]}
