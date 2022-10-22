@@ -1,6 +1,5 @@
 export type VisualArray = {
   value: number;
-  color: string;
   selected: boolean;
   checking: boolean;
   id?: number;

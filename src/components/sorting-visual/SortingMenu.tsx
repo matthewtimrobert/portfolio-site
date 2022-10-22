@@ -45,10 +45,8 @@ const SortingMenu: FC = () => {
   const sortingVisualType = useAppSelector(getSortingVisualType);
 
   const [localSortAmount, setLocalSortAmount] = useState(sortAmount);
-  const [localSpeed, setLocalSpeed] = useState(sortingSpeed);
 
   const debouncedLocalSortAmount = useDebounce(localSortAmount, 500);
-  const debouncedLocalSpeed = useDebounce(localSpeed, 500);
 
   const dispatch = useDispatch();
 
@@ -56,11 +54,6 @@ const SortingMenu: FC = () => {
     if (debouncedLocalSortAmount === localSortAmount)
       dispatch(setSortAmount(localSortAmount));
   }, [debouncedLocalSortAmount, localSortAmount, dispatch]);
-
-  useEffect(() => {
-    if (debouncedLocalSpeed === localSpeed)
-      dispatch(setSortingSpeed(localSpeed));
-  }, [debouncedLocalSpeed, localSpeed, dispatch]);
 
   return (
     <div className="anchor">
@@ -122,15 +115,15 @@ const SortingMenu: FC = () => {
               label="Speed (%)"
               fullWidth
               type="number"
-              value={localSpeed || ""}
+              value={sortingSpeed || ""}
               onChange={(e) => {
                 const val = parseInt(e.target.value);
                 if (val > 100) {
-                  setLocalSpeed(100);
+                  dispatch(setSortingSpeed(100));
                 } else if (val < 0) {
-                  setLocalSpeed(1);
+                  dispatch(setSortingSpeed(1));
                 } else {
-                  setLocalSpeed(val);
+                  dispatch(setSortingSpeed(val));
                 }
               }}
               style={{
@@ -138,17 +131,17 @@ const SortingMenu: FC = () => {
               }}
             />
             <Slider
-              value={localSpeed}
+              value={sortingSpeed}
               size="small"
               max={100}
               min={1}
               onChange={(_e, val) => {
                 if (val > 100) {
-                  setLocalSpeed(100);
+                  dispatch(setSortingSpeed(100));
                 } else if (val < 0) {
-                  setLocalSpeed(1);
+                  dispatch(setSortingSpeed(1));
                 } else {
-                  setLocalSpeed(val as number);
+                  dispatch(setSortingSpeed(val as number));
                 }
               }}
             />

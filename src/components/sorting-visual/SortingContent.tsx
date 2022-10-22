@@ -1,8 +1,7 @@
 import { useBounds } from "@react-three/drei";
-import { FC, useEffect, useMemo, useState } from "react";
+import { FC, useEffect, useMemo, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { Vector3 } from "three";
-import { BG_COLOR } from "../../assets/constants";
 import { useAppSelector } from "../../redux/configureStore";
 import {
   getNavType,
@@ -23,11 +22,16 @@ const SortingContent: FC = () => {
   const refreshAlgo = useAppSelector(getRefreshAlgo);
   const sortAmount = useAppSelector(getSortAmount);
   const sortingVisualType = useAppSelector(getSortingVisualType);
-
   const algoFunc = useMemo(() => getAlgo(sortingAlgo), [sortingAlgo]);
 
   const bounds = useBounds();
   const dispatch = useDispatch();
+
+  const sortingSpeedRef = useRef<number>(sortingSpeed);
+
+  useEffect(() => {
+    sortingSpeedRef.current = sortingSpeed;
+  }, [sortingSpeed]);
 
   // generate step 1 array
   const startingArray: VisualArray = useMemo(
@@ -36,7 +40,6 @@ const SortingContent: FC = () => {
         .fill(1)
         .map((_, i) => ({
           value: i,
-          color: BG_COLOR,
           selected: false,
           checking: false,
           id: Math.random(), // should use UID
@@ -60,7 +63,7 @@ const SortingContent: FC = () => {
         if (allowed) {
           setAnimationArray(target);
           return new Promise((resolve) =>
-            setTimeout(resolve, 100 * (1 / sortingSpeed) || 50)
+            setTimeout(resolve, 100 * (10 / sortingSpeedRef.current) || 50)
           );
         }
       };
@@ -69,14 +72,7 @@ const SortingContent: FC = () => {
     return () => {
       allowed = false;
     };
-  }, [
-    showVisual,
-    startingArray,
-    dispatch,
-    algoFunc,
-    refreshAlgo,
-    sortingSpeed,
-  ]);
+  }, [showVisual, startingArray, dispatch, algoFunc, refreshAlgo]);
 
   // update camera
   useEffect(() => {
