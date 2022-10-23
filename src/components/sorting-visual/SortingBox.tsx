@@ -12,6 +12,7 @@ interface Props {
   value: number;
   selected: boolean;
   checking: boolean;
+  done: boolean;
 }
 
 const SortingBox: FC<Props> = (props) => {
@@ -31,9 +32,14 @@ const SortingBox: FC<Props> = (props) => {
       );
     if (materialRef.current) {
       if (props.selected) {
-        materialRef.current.color.lerp(new Color("green"), speed);
+        materialRef.current.color.lerp(new Color("blue"), speed);
       } else if (props.checking) {
         materialRef.current.color.lerp(new Color("red"), speed);
+      } else if (props.done) {
+        materialRef.current.color.lerp(
+          new Color("green"),
+          1 / props.value / 20
+        );
       } else {
         materialRef.current.color.lerp(new Color(BG_COLOR), speed);
       }

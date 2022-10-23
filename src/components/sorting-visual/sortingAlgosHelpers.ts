@@ -2,6 +2,7 @@ export type VisualArray = {
   value: number;
   selected: boolean;
   checking: boolean;
+  done: boolean;
   id?: number;
 }[];
 
@@ -116,7 +117,7 @@ const wrapSort =
   (
     sortingFunc: (arr: VisualArray, compareTwo: CompareTwo, swap: Swap) => void
   ) =>
-  (
+  async (
     arr: VisualArray,
     setAnimationArrayAsync: (arr: VisualArray) => Promise<unknown>
   ) => {
@@ -145,8 +146,17 @@ const wrapSort =
       }));
       await setAnimationArrayAsync(newArr);
     };
-
-    sortingFunc([...arr], compareTwo, swap);
+    const arrayCopy = [...arr];
+    await sortingFunc(arrayCopy, compareTwo, swap);
+    // set final state
+    setAnimationArrayAsync(
+      arr.map((v) => ({
+        ...v,
+        selected: false,
+        checking: false,
+        done: true,
+      }))
+    );
   };
 
 export enum SortingAlgos {

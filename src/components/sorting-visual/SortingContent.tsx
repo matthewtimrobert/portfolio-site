@@ -39,9 +39,10 @@ const SortingContent: FC = () => {
       Array(sortAmount || 1)
         .fill(1)
         .map((_, i) => ({
-          value: i,
+          value: i + 1,
           selected: false,
           checking: false,
+          done: false,
           id: Math.random(), // should use UID
         }))
         // shuffle
