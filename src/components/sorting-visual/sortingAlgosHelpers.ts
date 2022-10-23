@@ -121,6 +121,7 @@ const wrapSort =
     arr: VisualArray,
     setAnimationArrayAsync: (arr: VisualArray) => Promise<unknown>
   ) => {
+    // sorting helper functions
     const compareTwo = async (
       i: number,
       j: number,
@@ -146,6 +147,7 @@ const wrapSort =
       }));
       await setAnimationArrayAsync(newArr);
     };
+
     const arrayCopy = [...arr];
     await sortingFunc(arrayCopy, compareTwo, swap);
     // set final state
