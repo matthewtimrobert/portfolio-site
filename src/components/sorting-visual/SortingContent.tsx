@@ -63,9 +63,11 @@ const SortingContent: FC = () => {
       const setAnimationArrayAsync = async (target: VisualArray) => {
         if (allowed) {
           setAnimationArray(target);
-          return new Promise((resolve) =>
-            setTimeout(resolve, 100 * (10 / sortingSpeedRef.current) || 50)
-          );
+          const msTime =
+            sortingSpeedRef.current === 100
+              ? 0
+              : 100 * (5 / (sortingSpeedRef.current || 50));
+          return new Promise((resolve) => setTimeout(resolve, msTime));
         }
       };
       algoFunc([...startingArray], setAnimationArrayAsync);
