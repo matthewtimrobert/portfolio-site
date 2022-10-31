@@ -56,7 +56,7 @@ const MenuContent: FC = () => {
         position={new Vector3(3, 0.25, 3)}
         text="Github"
         hoverText="github.com/matthewtimrobert"
-        onClick={() => window.open("https://wwww.github.com/matthewtimrobert")}
+        onClick={() => window.open("https://www.github.com/matthewtimrobert")}
       />
     </>
   );
